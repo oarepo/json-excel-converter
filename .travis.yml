@@ -5,7 +5,7 @@ python:
 #  - "3.8"
 
 before_install:
-  - pip install poetry
+  - pip install poetry coveralls
 
 install:
   - poetry install -E xlsxwriter
@@ -13,3 +13,6 @@ install:
 # command to run tests
 script:
   - pytest --cov
+
+after_success:
+  - coveralls
