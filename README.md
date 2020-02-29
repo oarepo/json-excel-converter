@@ -1,9 +1,9 @@
 # JSON to excel converter
 
-![](https://img.shields.io/github/license/oarepo/json-excel-converter.svg)
-![](https://img.shields.io/travis/oarepo/json-excel-converter.svg)
-![](https://img.shields.io/coveralls/oarepo/json-excel-converter.svg)
-![](https://img.shields.io/pypi/v/json-excel-converter.svg)
+[![](https://img.shields.io/github/license/oarepo/json-excel-converter.svg)](https://github.com/oarepo/json-excel-converter/blob/master/LICENSE)
+[![](https://img.shields.io/travis/oarepo/json-excel-converter.svg)](https://travis-ci.org/oarepo/json-excel-converter)
+[![](https://img.shields.io/coveralls/oarepo/json-excel-converter.svg)](https://coveralls.io/r/oarepo/json-excel-converter)
+[![](https://img.shields.io/pypi/v/json-excel-converter.svg)](https://pypi.org/pypi/json-excel-converter)
 
 A package that converts json to CSV, excel or other table formats
 
