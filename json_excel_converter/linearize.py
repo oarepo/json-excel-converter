@@ -185,12 +185,12 @@ class Columns:
                 errors.extend(self.columns[k].check(v))
             else:
                 errors.append(('nochild', k, v))
-                child_cardinality = self.options['k'].cardinality
+                child_cardinality = self.options[k].cardinality
                 column = Column(parent=self,
                                 path=self.path + k,
                                 name=k,
                                 cardinality=child_cardinality,
-                                options=self.options['k'])
+                                options=self.options[k])
                 self.columns[k] = column
                 column.check(v)  # do not add to errors as this subtree is a new one
         return errors
