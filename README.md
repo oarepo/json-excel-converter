@@ -127,20 +127,22 @@ while True:
 
 ### Arrays
 
-When first row is passed, the library creates the layout of columns. In case of arrays,
+When the first row is processed, the library guesses the columns layout. In case of arrays,
 a column (or more columns if the array contains json objects) is created for each
-of the items in the array.
+of the items in the array, as shown in the example above.
 
-Then on second row it might happen that the array contains more items. The library reacts
-by adjusting the number of columns in the layout and raising ``LinearizationError``.
+On subsequent rows the array might contain more items. The library reacts by adjusting 
+the number of columns in the layout and raising ``LinearizationError`` as previous rows might
+be already output.
+
+``Converter.convert_streaming`` just raises this exception - it is the responsibility of caller
+to take the right action.
 
 ``Converter.convert`` captures this error and restarts the processing. In case of CSV
-this means truncating the output file to 0 bytes and processing the data again.
+this means truncating the output file to 0 bytes and processing the data again. XLSX writer
+caches all the data before writing them to excel so the restart just means discarding the cache.
 
-``Converter.convert_streaming`` just raises this exception as data stream does not 
-generally supports rewinding.
-
-If you know the size of the array in advance, you might pass it in options. Then no
+If you know the size of the array in advance, you should pass it in options. Then no
 processing restarts are required and ``LinearizationError`` is not raised.
 
  ```python
@@ -156,13 +158,16 @@ options = Options()
 options['a'].cardinality = 3
 
 conv = Converter(options=options)
-conv.convert(data, Writer(file='/tmp/test.xlsx'))
+writer = Writer(file='/tmp/test.xlsx')
+conv.convert(data, writer)
+# or
+conv.convert_streaming(data, writer)    # no exception occurs here
 ```
 
 ### XLSX Formatting
 
-For xlsx, the library can format the output as well. To do so, pass the writer and array
-of formats from the ``json_excel_converter.xlsx.formats`` package or create your own.
+XLSX writer enables you to format the header and data by passing an array of header_formatters or
+data_formatters. Take these from ``json_excel_converter.xlsx.formats`` package or create your own.
 
 ```python
 from json_excel_converter import Converter
