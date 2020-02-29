@@ -1,0 +1,24 @@
+[build-system]
+requires = [ "poetry>=0.12",]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry]
+name = "json_excel_converter"
+version = "1.0.0"
+description = "JSON to excel convertor"
+authors = [ "Mirek Simek <miroslav.simek@vscht.cz>",]
+include = [ "tox.ini", "poetry.lock",]
+exclude = [ ]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+xlsxwriter = "^1.2.8"
+
+[tool.poetry.extras]
+xlsxwriter = ['xlsxwriter']
+
+[tool.poetry.scripts]
+
+[tool.poetry.dev-dependencies]
+pytest = "^5"
