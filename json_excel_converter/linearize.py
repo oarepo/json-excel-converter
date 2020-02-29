@@ -205,7 +205,9 @@ class Columns:
 
     @property
     def depth(self):
-        return max(c.depth for c in self.columns.values())
+        if self.columns:
+            return max(c.depth for c in self.columns.values())
+        return 0
 
     def get_header_row(self, level):
         for c in self.columns.values():
