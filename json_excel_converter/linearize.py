@@ -113,7 +113,8 @@ class Column:
         """
         if not level:
             for c in range(self.cardinality):
-                header_value = self.options.header_translator(self.name, c, self.cardinality)
+                header_value = self.options.header_translator(
+                    self.name, self.path, c, self.cardinality)
                 if self.children:
                     yield Value(header_value, self.columns_taken,
                                 path=self.path, has_children=True)

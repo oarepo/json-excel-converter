@@ -93,7 +93,7 @@ def test_ordering():
 
 
 def test_array_header_translation():
-    def translator(header, idx, cardinality):
+    def translator(header, path, idx, cardinality):
         if cardinality > 1:
             return '%s %s' % (header, idx + 1)
         else:

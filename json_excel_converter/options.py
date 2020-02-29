@@ -13,10 +13,12 @@ class Options:
         self.fields = fields
         self.excludes = excludes or set()
         self.header_translator = header_translator or (
-            parent.header_translator if parent else (lambda header, index, cardinality: header)
+            parent.header_translator if parent else
+            (lambda header, path, index, cardinality: header)
         )
         self.value_translator = value_translator or (
-            parent.value_translator if parent else (lambda value, name, index, cardinality: value)
+            parent.value_translator if parent else
+            (lambda value, path, index, cardinality: value)
         )
 
     def __getitem__(self, item):
