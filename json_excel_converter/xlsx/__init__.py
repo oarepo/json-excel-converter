@@ -30,7 +30,8 @@ class Writer(bWriter):
 
     def __init__(self, file=None, workbook=None, sheet=None,
                  sheet_name=None, start_row=1, start_col=0,
-                 header_formats=(), data_formats=()):
+                 header_formats=(), data_formats=(),
+                 column_widths=None):
         super().__init__()
         self.file = file
         self.workbook = workbook
@@ -43,6 +44,7 @@ class Writer(bWriter):
         self.start_col = start_col
         self.header_formatter = Formatter(header_formats)
         self.data_formatter = Formatter(data_formats)
+        self.column_widths = column_widths or {}
 
     def start(self):
         self.headers = []
@@ -70,6 +72,13 @@ class Writer(bWriter):
             self.output_row(r, row_idx, first=not row_idx, last=row_idx == len(self.rows) - 1)
         self.after_rows()
         self.after_write()
+        for header in self.headers:
+            col = 0
+            for cell in header:
+                if cell.path in self.column_widths:
+                    self.sheet.set_column(col, col + cell.columns - 1,
+                                          self.column_widths[cell.path])
+                col += cell.columns
         if close:
             self.workbook.close()
 

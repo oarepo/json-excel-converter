@@ -166,6 +166,8 @@ conv.convert_streaming(data, writer)    # no exception occurs here
 
 ### XLSX Formatting
 
+#### Cell format
+
 XLSX writer enables you to format the header and data by passing an array of header_formatters or
 data_formatters. Take these from ``json_excel_converter.xlsx.formats`` package or create your own.
 
@@ -198,3 +200,26 @@ conv.convert(data, w)
 ```
 
 See https://xlsxwriter.readthedocs.io/format.html for details on formats in xlsxwriter
+
+#### Column widths
+
+Pass the required columns widths to writer:
+
+```python
+w = Writer('/tmp/test3.xlsx', column_widths={
+    'a': 20
+})
+```
+
+Width of nested data can be specified as well: 
+
+```python
+data = [
+    {'a': {'b': 1, 'c': 2}}
+]
+
+w = Writer('/tmp/test3.xlsx', column_widths={
+    'a.b': 20,
+    'a.c': 30,
+})
+```

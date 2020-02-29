@@ -61,12 +61,16 @@ def test_red_header():
                    Centered, Bold, LastUnderlined,
                    Format({
                        'font_color': 'red'
-                   })),
+                   })
+               ),
                data_formats=(
                    Format({
                        'font_color': 'green'
-                   }),)
-               )
+                   }),
+               ),
+               column_widths={
+                   'a': 30
+               })
 
     conv = Converter()
     conv.convert(data, w)
