@@ -243,10 +243,10 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [extras]
-xlsx = ["xlsxwriter"]
+xlsxwriter = ["xlsxwriter"]
 
 [metadata]
-content-hash = "e74236f5db40cec167bb914b0bd5c99d62eeaf4fa38df13758004e41d8a8cc7c"
+content-hash = "b00d6231a9964b9a7020cb6953092733b70d7685aff3047b165a1e9c10beafeb"
 python-versions = "^3.6"
 
 [metadata.files]
