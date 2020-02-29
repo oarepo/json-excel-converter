@@ -13,10 +13,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-xlsxwriter = "^1.2.8"
 
 [tool.poetry.extras]
-xlsxwriter = ['xlsxwriter']
+xlsxwriter = ['xlsxwriter^1.2']
 
 [tool.poetry.scripts]
 
