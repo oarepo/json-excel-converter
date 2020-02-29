@@ -1,67 +1,42 @@
 class Format:
+    def __init__(self, fmt=None):
+        self.fmt = fmt or {}
+
+    def data_format(self, cell_data, rowidx, colidx, first, last):
+        return self.fmt
+
+
+class Bold(Format):
     @classmethod
-    def data_format(self, is_header, cell_data, rowidx, colidx, first, last):
-        """
-        Override this method to get custom formatting
-        """
-        return {}
+    def data_format(cls, cell_data, rowidx, colidx, first, last):
+        return {
+            'bold': True
+        }
 
 
-class HeaderFormat(Format):
-    def __init__(self, fmt):
-        self.fmt = fmt
-
-    def data_format(self, is_header, cell_data, rowidx, colidx, first, last):
-        if is_header:
-            return self.fmt
-        return {}
-
-
-class BoldHeaderFormat(Format):
+class Centered(Format):
     @classmethod
-    def data_format(self, is_header, cell_data, rowidx, colidx, first, last):
-        if is_header:
-            return {
-                'bold': True
-            }
-        return {}
+    def data_format(cls, cell_data, rowidx, colidx, first, last):
+        return {
+            'align': 'center',
+            'valign': 'vcenter'
+        }
 
 
-class CenteredHeaderFormat(Format):
+class LastUnderlined(Format):
     @classmethod
-    def data_format(self, is_header, cell_data, rowidx, colidx, first, last):
-        if is_header:
-            return {
-                'align': 'center',
-                'valign': 'vcenter'
-            }
-        return {}
-
-
-class UnderlinedHeaderFormat(Format):
-    @classmethod
-    def data_format(self, is_header, cell_data, rowidx, colidx, first, last):
-        if is_header and last:
+    def data_format(cls, cell_data, rowidx, colidx, first, last):
+        if last:
             return {
                 'bottom': 1
             }
         return {}
 
 
-class ColumnBorderFormat(Format):
+class ColumnBorder(Format):
     @classmethod
-    def data_format(self, is_header, cell_data, rowidx, colidx, first, last):
+    def data_format(cls, cell_data, rowidx, colidx, first, last):
         return {
             'left': 1,
             'right': 1
         }
-
-
-class DataFormat(Format):
-    def __init__(self, fmt):
-        self.fmt = fmt
-
-    def data_format(self, is_header, cell_data, rowidx, colidx, first, last):
-        if not is_header:
-            return self.fmt
-        return {}

@@ -1,18 +1,16 @@
 from json_excel_converter import Converter
 from json_excel_converter.xlsx import Writer
 from json_excel_converter.xlsx.formats import (
-    UnderlinedHeaderFormat,
-    ColumnBorderFormat,
-    BoldHeaderFormat,
-    CenteredHeaderFormat,
-    HeaderFormat
-)
+    LastUnderlined,
+    ColumnBorder,
+    Bold,
+    Centered, Format)
 from json_excel_converter.linearize import Value
 
 
 def test_writer():
     w = Writer('/tmp/test.xlsx',
-               formats=(CenteredHeaderFormat, BoldHeaderFormat, UnderlinedHeaderFormat,))
+               header_formats=(Centered, Bold, LastUnderlined,))
     w.start()
     w.write_header([
         Value('a', 1),
@@ -32,8 +30,9 @@ def test_writer():
 
 def test_writer_2():
     w = Writer('/tmp/test2.xlsx',
-               formats=(CenteredHeaderFormat, BoldHeaderFormat,
-                        UnderlinedHeaderFormat, ColumnBorderFormat,))
+               header_formats=(Centered, Bold,
+                               LastUnderlined, ColumnBorder,),
+               data_formats=(ColumnBorder,))
     w.start()
     w.write_header([
         Value('a', 1),
@@ -58,10 +57,16 @@ def test_red_header():
     ]
 
     w = Writer('/tmp/test3.xlsx',
-               formats=(CenteredHeaderFormat, BoldHeaderFormat, UnderlinedHeaderFormat,
-                        HeaderFormat({
-                            'font_color': 'red'
-                        })))
+               header_formats=(
+                   Centered, Bold, LastUnderlined,
+                   Format({
+                       'font_color': 'red'
+                   })),
+               data_formats=(
+                   Format({
+                       'font_color': 'green'
+                   }),)
+               )
 
     conv = Converter()
     conv.convert(data, w)

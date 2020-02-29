@@ -168,8 +168,8 @@ of formats from the ``json_excel_converter.xlsx.formats`` package or create your
 from json_excel_converter import Converter
 
 from json_excel_converter.xlsx import Writer
-from json_excel_converter.xlsx.formats import UnderlinedHeaderFormat, BoldHeaderFormat, \
-    CenteredHeaderFormat, HeaderFormat
+from json_excel_converter.xlsx.formats import LastUnderlined, Bold, \
+    Centered, Format
 
 data = [
     {'a': 'Hello'},
@@ -177,10 +177,16 @@ data = [
 ]
 
 w = Writer('/tmp/test3.xlsx',
-           formats=(CenteredHeaderFormat, BoldHeaderFormat, UnderlinedHeaderFormat, 
-                    HeaderFormat({
-                        'font_color': 'red'
-                    })))
+           header_formats=(
+               Centered, Bold, LastUnderlined,
+               Format({
+                   'font_color': 'red'
+               })),
+           data_formats=(
+               Format({
+                   'font_color': 'green'
+               }),)
+           )
 
 conv = Converter()
 conv.convert(data, w)
