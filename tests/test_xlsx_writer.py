@@ -1,5 +1,5 @@
 from json_excel_converter import Converter
-from json_excel_converter.xlsx import Writer
+from json_excel_converter.xlsx import Writer, DEFAULT_COLUMN_WIDTH
 from json_excel_converter.xlsx.formats import (
     LastUnderlined,
     ColumnBorder,
@@ -52,8 +52,8 @@ def test_writer_2():
 
 def test_red_header():
     data = [
-        {'a': 'Hello'},
-        {'a': 'World'}
+        {'a': 'Hello', 'b': 'aaa'},
+        {'a': 'World', 'b': 'bbb'}
     ]
 
     w = Writer('/tmp/test3.xlsx',
@@ -69,7 +69,8 @@ def test_red_header():
                    }),
                ),
                column_widths={
-                   'a': 30
+                   'a': 30,
+                   DEFAULT_COLUMN_WIDTH: 20
                })
 
     conv = Converter()

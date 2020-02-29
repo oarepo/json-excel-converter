@@ -203,7 +203,7 @@ See https://xlsxwriter.readthedocs.io/format.html for details on formats in xlsx
 
 #### Column widths
 
-Pass the required columns widths to writer:
+Pass the required column widths to writer:
 
 ```python
 w = Writer('/tmp/test3.xlsx', column_widths={
@@ -221,5 +221,13 @@ data = [
 w = Writer('/tmp/test3.xlsx', column_widths={
     'a.b': 20,
     'a.c': 30,
+})
+```
+
+To set the default column width, pass it as ``DEFAULT_COLUMN_WIDTH`` property:
+
+```python
+w = Writer('/tmp/test3.xlsx', column_widths={
+    DEFAULT_COLUMN_WIDTH: 20
 })
 ```

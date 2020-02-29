@@ -23,6 +23,17 @@ class Formatter:
         return fmt
 
 
+class Token:
+    def __eq__(self, other):
+        return self is other
+
+    def __hash__(self):
+        return id(self)
+
+
+DEFAULT_COLUMN_WIDTH = Token()
+
+
 class Writer(bWriter):
     """
     XLSXWriter can not reset the sheet, so all the data are cached and written out on "finish"
@@ -72,6 +83,18 @@ class Writer(bWriter):
             self.output_row(r, row_idx, first=not row_idx, last=row_idx == len(self.rows) - 1)
         self.after_rows()
         self.after_write()
+
+        if DEFAULT_COLUMN_WIDTH in self.column_widths:
+            max_col = 0
+            for header in self.headers:
+                col = 0
+                for cell in header:
+                    col += cell.columns
+                if col > max_col:
+                    max_col = col
+            for col in range(max_col):
+                self.sheet.set_column(col, col, self.column_widths[DEFAULT_COLUMN_WIDTH])
+
         for header in self.headers:
             col = 0
             for cell in header:
