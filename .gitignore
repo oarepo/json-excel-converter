@@ -3,3 +3,5 @@
 /build
 /dist
 
+/json_excel_converter.egg-info/
+/.coverage

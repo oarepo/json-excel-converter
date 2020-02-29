@@ -16,7 +16,8 @@ class Formatter:
     def merge_format(self, is_header, cell_data, rowidx, colidx, first, last):
         my_format = self.format_data(is_header, cell_data, rowidx, colidx, first, last)
         if self.previous:
-            prev_format = self.previous.merge_format(is_header, cell_data, rowidx, colidx, first, last)
+            prev_format = self.previous.merge_format(is_header, cell_data,
+                                                     rowidx, colidx, first, last)
             return {
                 **prev_format,
                 **my_format

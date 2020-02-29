@@ -40,7 +40,8 @@ class Column:
 
         :param parent:          parent columns
         :param name:            name of the column
-        :param cardinality:     cardinality of the column - if the data are array, the maximum length of the array
+        :param cardinality:     cardinality of the column - if the data are array,
+                                the maximum length of the array
         :param options:         an instance of Options class
         """
         self.parent = parent
@@ -69,13 +70,15 @@ class Column:
             errors.extend(self.children.check(value))
         else:
             if self.children:
-                raise ValueError('Inconsistent JSON: sometimes a primitive is used, sometimes a dict')
+                raise ValueError(
+                    'Inconsistent JSON: sometimes a primitive is used, sometimes a dict')
         return errors
 
     def empty(self, already_output=0):
         """
         return empty cells that this column (with subcolumns) take
-        :param already_output:  the number of columns (for cardinality>1) that has already been output
+        :param already_output:  the number of columns (for cardinality>1)
+                                that has already been output
         :return:    generator of columns
         """
         if self.cardinality > already_output:
@@ -112,7 +115,8 @@ class Column:
             for c in range(self.cardinality):
                 header_value = self.options.header_translator(self.name, c, self.cardinality)
                 if self.children:
-                    yield Value(header_value, self.columns_taken, path=self.path, has_children=True)
+                    yield Value(header_value, self.columns_taken,
+                                path=self.path, has_children=True)
                 else:
                     yield Value(header_value, path=self.path)
         elif not self.children:

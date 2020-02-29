@@ -32,11 +32,15 @@ def test_array():
     cols = Columns()
     vals = {'a': ['a', 'aa'], 'b': 'bb'}
     cols.check(vals)
-    assert list(cols.output(vals)) == [Value('a', 1, path='a'), Value('aa', 1, path='a'), Value('bb', 1, path='b')]
+    assert list(cols.output(vals)) == [
+        Value('a', 1, path='a'), Value('aa', 1, path='a'), Value('bb', 1, path='b')
+    ]
     assert len(cols.columns) == 2
     assert cols.columns_taken == 3
     assert cols.depth == 1
-    assert list(cols.get_header_row(0)) == [Value('a', 1, path='a'), Value('a', 1, path='a'), Value('b', 1, path='b')]
+    assert list(cols.get_header_row(0)) == [
+        Value('a', 1, path='a'), Value('a', 1, path='a'), Value('b', 1, path='b')
+    ]
 
 
 def test_nested():
@@ -46,7 +50,9 @@ def test_nested():
 
     assert cols.depth == 2
     assert list(cols.get_header_row(0)) == [
-        Value('a', 1, path='a', has_children=True), Value('a', 1, path='a', has_children=True), Value('b', 1, path='b')
+        Value('a', 1, path='a', has_children=True),
+        Value('a', 1, path='a', has_children=True),
+        Value('b', 1, path='b')
     ]
     assert list(cols.get_header_row(1)) == [
         Value('c', 1, path='a.c'), Value('c', 1, path='a.c'), Value('', 1, path='b')
@@ -96,4 +102,6 @@ def test_array_header_translation():
     cols = Columns(options=Options(header_translator=translator))
     vals = {'a': ['a', 'aa'], 'b': 'bb'}
     cols.check(vals)
-    assert list(cols.get_header_row(0)) == [Value('a 1', 1, path='a'), Value('a 2', 1, path='a'), Value('b', 1, path='b')]
+    assert list(cols.get_header_row(0)) == [
+        Value('a 1', 1, path='a'), Value('a 2', 1, path='a'), Value('b', 1, path='b')
+    ]
