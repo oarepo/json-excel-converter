@@ -1,2 +1,3 @@
 [run]
-omit =
+source =
+    json_excel_converter
