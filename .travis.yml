@@ -17,13 +17,13 @@ script:
 after_success:
   - coveralls
 
+before_deploy:
+  - poetry config http-basic.pypi $PYPI_USER $PYPI_PASSWORD
+  - poetry build
+
 deploy:
-  provider: pypi
-  user: "__token__"
-  password:
-    secure: "bdNMJ4cbA7utHxf4byoqMb3wwHvN0WKH85y6Q5O1aeppPUInElq47fab292QbE4edG7y8d1l2kLmDPccmuKQP7o6lODWZwi9O5IWAS3HwHqthL6O+m4r8YiHkmMA28UrYmYkwFyKcAnXNYxoTPQL2DnIewr5jLxXv7Owfs/6EiNq03oRI5mz2hNcPkVWWSlqsQ2m+pv+Crk0r6fz5USesxl7d4I1/Su99eHtFR78X1heBw4llKQyhjhbwJuhOdcSw/kl50rQTqY7EgI3tdxdDAgriRyTTYU2QYHCc2lZ8/GlFnbdBT8YqAOfoXeF3BBHK77hC8CwFaxuZe8vj1AfHppZo5umwGOl+/HQomWUZbAtEUX+K0xd+StvedjnOhPatXTTJNRJjJNh1zrW8AKL0aRFrd4MtPqfuuK5fpP46Zyz1lkQyoodkLI63qTtX0iwpNJOZcaG2AUOVf2y+fwJt4uqzPbDm0BV6PyEJDo3O8HR3iVMMXsV9HZPa38qQ54lSOh8ixlfn7DUv1dZTDLdvfmTKHuHPrv92yZWGt5+M8qJvMs10+Vz6140X2K7soxnNgSeRMMxXoXRV3iDkWAlTeHG3yi5V4m8TltXr3GlqLlih8QegTosJEn/wVfiOLgL0K4jDnH59x2wjxu32YPWkRH3+sOLvss1Gi3S9TrXSTY="
+  provider: script
+  script: poetry publish
   on:
     tags: true
-    branch: master
-  distributions: "sdist bdist_wheel"
-  skip_existing: true
+    condition: "$TRAVIS_PYTHON_VERSION == 3.7"
