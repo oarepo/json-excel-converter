@@ -17,12 +17,9 @@ script:
 after_success:
   - coveralls
 
-before_deploy:
-  - poetry build
-
 deploy:
   provider: script
-  script: poetry publish
+  script: poetry publish --build
   on:
     tags: true
     condition: "$TRAVIS_PYTHON_VERSION == 3.7"
