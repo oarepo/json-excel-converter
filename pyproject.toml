@@ -4,12 +4,19 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "json_excel_converter"
-version = "1.0.0"
+version = "1.0.1"
 description = "JSON to excel convertor"
 authors = [ "Mirek Simek <miroslav.simek@vscht.cz>",]
 include = [ "tox.ini", "poetry.lock",]
 exclude = [ ]
 readme = "README.md"
+homepage = 'https://github.com/oarepo/json-excel-converter'
+repository = 'https://github.com/oarepo/json-excel-converter'
+keywords = [ 'json', 'excel', 'csv', 'xlsxwriter' ]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
 
 [tool.poetry.dependencies]
 python = "^3.6"
