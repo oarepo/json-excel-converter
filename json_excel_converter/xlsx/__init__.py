@@ -32,6 +32,7 @@ class Token:
 
 
 DEFAULT_COLUMN_WIDTH = Token()
+DEFAULT_ROW_HEIGHT = Token()
 
 
 class Writer(bWriter):
@@ -42,7 +43,7 @@ class Writer(bWriter):
     def __init__(self, file=None, workbook=None, sheet=None,
                  sheet_name=None, start_row=1, start_col=0,
                  header_formats=(), data_formats=(),
-                 column_widths=None):
+                 column_widths=None, row_heights=None):
         super().__init__()
         self.file = file
         self.workbook = workbook
@@ -56,6 +57,7 @@ class Writer(bWriter):
         self.header_formatter = Formatter(header_formats)
         self.data_formatter = Formatter(data_formats)
         self.column_widths = column_widths or {}
+        self.row_heights = row_heights or {}
 
     def start(self):
         self.headers = []
@@ -102,6 +104,16 @@ class Writer(bWriter):
                     self.sheet.set_column(col, col + cell.columns - 1,
                                           self.column_widths[cell.path])
                 col += cell.columns
+
+        if DEFAULT_ROW_HEIGHT in self.row_heights:
+            for row_idx in range(self.current_row):
+                self.sheet.set_row(row_idx, self.row_heights[DEFAULT_ROW_HEIGHT])
+
+        for row_idx, height in self.row_heights.items():
+            if row_idx is DEFAULT_ROW_HEIGHT:
+                continue
+            self.sheet.set_row(row_idx, height)
+
         if close:
             self.workbook.close()
 

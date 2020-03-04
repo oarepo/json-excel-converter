@@ -231,3 +231,14 @@ w = Writer('/tmp/test3.xlsx', column_widths={
     DEFAULT_COLUMN_WIDTH: 20
 })
 ```
+
+#### Row heights
+
+Row heights can be specified via the ``row_heights`` writer option:
+
+```python
+w = Writer('/tmp/test3.xlsx', row_heights={
+    DEFAULT_ROW_HEIGHT: 20,     # a bit taller rows
+    1: 40                       # extra tall header
+})
+```

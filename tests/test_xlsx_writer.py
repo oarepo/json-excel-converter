@@ -1,5 +1,5 @@
 from json_excel_converter import Converter
-from json_excel_converter.xlsx import Writer, DEFAULT_COLUMN_WIDTH
+from json_excel_converter.xlsx import Writer, DEFAULT_COLUMN_WIDTH, DEFAULT_ROW_HEIGHT
 from json_excel_converter.xlsx.formats import (
     LastUnderlined,
     ColumnBorder,
@@ -71,6 +71,11 @@ def test_red_header():
                column_widths={
                    'a': 30,
                    DEFAULT_COLUMN_WIDTH: 20
+               },
+               row_heights={
+                   DEFAULT_ROW_HEIGHT: 20,
+                   0: 10,
+                   1: 30
                })
 
     conv = Converter()

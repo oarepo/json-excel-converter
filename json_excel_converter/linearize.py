@@ -68,10 +68,11 @@ class Column:
                 self.children = Columns(path=self.path, options=self.options)
                 errors.append(('nochildren', self.path, value))
             errors.extend(self.children.check(value))
-        else:
+        elif value is not None:
             if self.children:
                 raise ValueError(
-                    'Inconsistent JSON: sometimes a primitive is used, sometimes a dict')
+                    'Inconsistent JSON: %s: sometimes a primitive is used, sometimes a dict. '
+                    'Value %s, previous dict %s' % (self.path, value, self.children.columns))
         return errors
 
     def empty(self, already_output=0):
@@ -102,7 +103,7 @@ class Column:
         else:
             # otherwise it is a primitive value, so just return it
             yield Value(self.options.value_translator(value, self.path, index, self.cardinality),
-                        path=self.path)
+                        path=self.path, columns=self.columns_taken)
 
     def get_header_row(self, level):
         """
@@ -140,6 +141,9 @@ class Column:
         if self.children:
             return 1 + self.children.depth
         return 1
+
+    def __repr__(self):
+        return self.name
 
 
 class Columns:
