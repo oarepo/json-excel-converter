@@ -4,7 +4,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "json_excel_converter"
-version = "1.1.0"
+version = "1.2.0"
 description = "JSON to excel convertor"
 authors = [ "Mirek Simek <miroslav.simek@vscht.cz>",]
 include = [ "tox.ini", "poetry.lock",]

@@ -246,3 +246,40 @@ w = Writer('/tmp/test3.xlsx', row_heights={
     1: 40                       # extra tall header
 })
 ```
+#### Urls
+
+![](./docs/test4.png)
+
+To render url, pass a function that gets data of a row and returns url to options
+
+ ```python
+data = [
+    {'a': 'https://google.com'},
+]
+
+options = Options()
+options['a'].url = lambda data: data['a']
+
+conv = Converter(options)
+conv.convert(data, w)
+```
+**Note:** this will only be rendered in XLSX output, CSV output will silently
+ignore the link.
+
+#### Custom cell rendering
+
+Override the ``write_cell`` method. The method receives ``cell_data`` 
+(instance of ``json_excel_converter.Value``) and ``data`` (the original
+data being written to this row). Note that this method is used both
+for writing header and rows - for header the ``data`` parameter is None. 
+
+```python
+class UrlWriter(Writer):
+    def write_cell(self, row, col, cell_data, cell_format, data):
+        if cell_data.path == 'a' and data:
+            self.sheet.write_url(row, col,
+                                 'https://test.org/' + data['b'],
+                                 string=cell_data.value)
+        else:
+            super().write_cell(row, col, cell_data, cell_format, data)
+```

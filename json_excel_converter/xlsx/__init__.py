@@ -51,6 +51,7 @@ class Writer(bWriter):
         self.sheet_name = sheet_name
         self.headers = []
         self.rows = []
+        self.raw = []
         self.current_row = start_row
         self.start_row = start_row
         self.start_col = start_col
@@ -62,11 +63,13 @@ class Writer(bWriter):
     def start(self):
         self.headers = []
         self.rows = []
+        self.raw = []
         self.current_row = 0
 
     def reset(self):
         self.headers = []
         self.rows = []
+        self.raw = []
 
     def finish(self):
         close = not self.sheet
@@ -82,7 +85,9 @@ class Writer(bWriter):
         self.after_headers()
         self.before_rows()
         for row_idx, r in enumerate(self.rows):
-            self.output_row(r, row_idx, first=not row_idx, last=row_idx == len(self.rows) - 1)
+            self.output_row(r, row_idx, first=not row_idx,
+                            last=row_idx == len(self.rows) - 1,
+                            raw=self.raw[row_idx])
         self.after_rows()
         self.after_write()
 
@@ -157,29 +162,43 @@ class Writer(bWriter):
         cell_data.span = span
         return self.output_cell(
             col, cell_data,
-            self.header_formatter.format(cell_data, header_idx, col, first, last))
+            self.header_formatter.format(cell_data, header_idx, col, first, last), data=None)
 
-    def output_row(self, row, row_idx, first, last):
+    def output_row(self, row, row_idx, first, last, raw):
         col = self.start_col
         for r in row:
-            col = self.output_row_cell(col, r, row_idx, first, last)
+            col = self.output_row_cell(col, r, row_idx, first, last, raw)
         self.current_row += 1
 
-    def output_row_cell(self, col, cell_data, row_idx, first, last):
+    def output_row_cell(self, col, cell_data, row_idx, first, last, raw):
         return self.output_cell(col, cell_data,
-                                self.data_formatter.format(cell_data, row_idx, col, first, last))
+                                self.data_formatter.format(cell_data, row_idx, col, first, last),
+                                raw)
 
-    def output_cell(self, col, cell_data, cell_format):
+    def output_cell(self, col, cell_data, cell_format, data):
         if cell_data.columns > 1 or cell_data.span > 1:
-            self.sheet.merge_range(self.current_row, col, self.current_row + cell_data.span - 1,
-                                   col + cell_data.columns - 1, cell_data.value, cell_format)
+            self.write_cell_range(self.current_row, col,
+                                  self.current_row + cell_data.span - 1,
+                                  col + cell_data.columns - 1, cell_data, cell_format)
         else:
             if cell_data.value != '':
-                self.sheet.write(self.current_row, col, cell_data.value, cell_format)
+                self.write_cell(self.current_row, col, cell_data, cell_format, data)
         return col + cell_data.columns
+
+    def write_cell(self, row, col, cell_data, cell_format, data):
+        if cell_data.value != '':
+            if cell_data.url:
+                self.sheet.write_url(row, col, cell_data.url,
+                                     string=cell_data.value, cell_format=cell_format)
+            else:
+                self.sheet.write(row, col, cell_data.value, cell_format)
+
+    def write_cell_range(self, row, col, trow, tcol, cell_data, cell_format):
+        self.sheet.merge_range(row, col, trow, tcol, cell_data.value, cell_format)
 
     def write_header(self, header):
         self.headers.append((list(header)))
 
-    def write_row(self, row):
+    def write_row(self, row, data):
         self.rows.append((list(row)))
+        self.raw.append(data)

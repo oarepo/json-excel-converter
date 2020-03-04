@@ -1,4 +1,4 @@
-from .linearize import LinearizationError
+from .linearize import LinearizationError, Value
 from .converter import Converter
 from .options import Options
 
@@ -28,7 +28,7 @@ class Writer:
         """
         raise NotImplemented()  # pragma: no cover
 
-    def write_row(self, row):
+    def write_row(self, row, data):
         """
         Writes a row
         :param row: a list of values, a value can be None to leave its space empty

@@ -31,9 +31,9 @@ class Writer(bWriter):
         self.fd = None
 
     def write_header(self, header):
-        self.write_row(header)
+        self.write_row(header, None)
 
-    def write_row(self, row):
+    def write_row(self, row, data):
         out = []
         for h in row:
             v = h.value

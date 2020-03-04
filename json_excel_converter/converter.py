@@ -27,7 +27,7 @@ class Converter:
             elif errors:
                 raise LinearizationError(errors)
             row = self.conv.output(d)
-            writer.write_row(row)
+            writer.write_row(row, d)
         writer.finish()
         self.conv = None
 

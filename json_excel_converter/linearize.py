@@ -4,12 +4,13 @@ from .options import Options
 
 
 class Value:
-    def __init__(self, value, columns=1, span=1, path=None, has_children=False):
+    def __init__(self, value, columns=1, span=1, path=None, has_children=False, url=None):
         self.value = value
         self.columns = columns
         self.span = span
         self.path = path
         self.has_children = has_children
+        self.url = url
 
     def __eq__(self, other):
         return isinstance(other, Value) and self.value == other.value and \
@@ -85,7 +86,7 @@ class Column:
         if self.cardinality > already_output:
             return Value('', (self.cardinality - already_output) * self.columns_taken)
 
-    def output(self, value, index=0):
+    def output(self, value, data, index=0):
         """
         Output the value
         :param value:
@@ -94,16 +95,19 @@ class Column:
         if isinstance(value, (list, tuple)):
             # output the values from the array
             for idx, v in enumerate(value):
-                yield from self.output(v, idx)
+                yield from self.output(v, data, idx)
             # output any extra empty space if more items are allocated
             if len(value) < self.cardinality:
                 yield self.empty(already_output=len(value))
         elif isinstance(value, dict):
-            yield from self.children.output(value)
+            yield from self.children.output(value, data)
         else:
             # otherwise it is a primitive value, so just return it
-            yield Value(self.options.value_translator(value, self.path, index, self.cardinality),
-                        path=self.path, columns=self.columns_taken)
+            yield Value(
+                self.options.value_translator(value, self.path, index, self.cardinality),
+                path=self.path, columns=self.columns_taken,
+                url=self.options.url(data)
+            )
 
     def get_header_row(self, level):
         """
@@ -200,12 +204,14 @@ class Columns:
                 column.check(v)  # do not add to errors as this subtree is a new one
         return errors
 
-    def output(self, json):
+    def output(self, json, data=None):
+        if data is None:
+            data = json
         for k, column in self.columns.items():
             if k not in json:
                 yield column.empty()
             else:
-                yield from column.output(json[k])
+                yield from column.output(json[k], data)
 
     @property
     def depth(self):

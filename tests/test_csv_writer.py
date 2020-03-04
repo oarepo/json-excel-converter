@@ -16,8 +16,8 @@ def test_writer():
         Value('b2', 1),
         Value(None, 1)
     ])
-    w.write_row([Value(1), Value(2), Value(3), Value(4)])
-    w.write_row([Value('1'), Value('2'), Value('3'), Value('4')])
+    w.write_row([Value(1), Value(2), Value(3), Value(4)], data=None)
+    w.write_row([Value('1'), Value('2'), Value('3'), Value('4')], data=None)
     w.finish()
     assert w.file.getvalue() == (
             'a,b,,c\r\n' +

@@ -5,7 +5,8 @@ class Options:
                  sort_key=None,
                  header_translator=None,
                  value_translator=None,
-                 parent=None):
+                 parent=None,
+                 url=None):
         self.children = {}
         self.cardinality = cardinality
         self.ordering = ordering
@@ -20,6 +21,7 @@ class Options:
             parent.value_translator if parent else
             (lambda value, path, index, cardinality: value)
         )
+        self.url = url or (lambda data: None)
 
     def __getitem__(self, item):
         if item in self.children:
