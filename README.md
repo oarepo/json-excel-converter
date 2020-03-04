@@ -7,6 +7,27 @@
 
 A package that converts json to CSV, excel or other table formats
 
+<!--TOC-->
+
+- [JSON to excel converter](#json-to-excel-converter)
+  - [Sample output](#sample-output)
+    - [Simple json](#simple-json)
+    - [Nested json](#nested-json)
+    - [json with array property](#json-with-array-property)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Simple usage](#simple-usage)
+    - [Streaming usage with restarts](#streaming-usage-with-restarts)
+    - [Arrays](#arrays)
+    - [XLSX Formatting](#xlsx-formatting)
+      - [Cell format](#cell-format)
+      - [Column widths](#column-widths)
+      - [Row heights](#row-heights)
+      - [Urls](#urls)
+      - [Custom cell rendering](#custom-cell-rendering)
+
+<!--TOC-->
+
 ## Sample output
 
 ![](./docs/sample.png)

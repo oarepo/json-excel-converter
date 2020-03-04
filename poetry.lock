@@ -9,7 +9,6 @@ version = "1.5"
 [[package]]
 category = "dev"
 description = "Atomic file writes."
-marker = "sys_platform == \"win32\""
 name = "atomicwrites"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
@@ -65,6 +64,17 @@ testing = ["pre-commit"]
 
 [[package]]
 category = "dev"
+description = "A collection of useful non-standard Python functions which aim to be simple to use, highly readable but not efficient."
+name = "fpyutils"
+optional = false
+python-versions = ">=3"
+version = "1.1.0"
+
+[package.dependencies]
+atomicwrites = "1.3.0"
+
+[[package]]
+category = "dev"
 description = "Read metadata from Python packages"
 marker = "python_version < \"3.8\""
 name = "importlib-metadata"
@@ -78,6 +88,17 @@ zipp = ">=0.5"
 [package.extras]
 docs = ["sphinx", "rst.linker"]
 testing = ["packaging", "importlib-resources"]
+
+[[package]]
+category = "dev"
+description = "A utility that is able to generate a table of contents for a markdown file."
+name = "md-toc"
+optional = false
+python-versions = ">=3.5, <4"
+version = "6.0.2"
+
+[package.dependencies]
+fpyutils = "1.1.0"
 
 [[package]]
 category = "dev"
@@ -246,7 +267,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 xlsxwriter = ["xlsxwriter"]
 
 [metadata]
-content-hash = "b00d6231a9964b9a7020cb6953092733b70d7685aff3047b165a1e9c10beafeb"
+content-hash = "d7bc1087307fb53217fd700d7dacfa9d7e868b72c099cfaef38e887069cb77aa"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -303,9 +324,17 @@ execnet = [
     {file = "execnet-1.7.1-py2.py3-none-any.whl", hash = "sha256:d4efd397930c46415f62f8a31388d6be4f27a91d7550eb79bc64a756e0056547"},
     {file = "execnet-1.7.1.tar.gz", hash = "sha256:cacb9df31c9680ec5f95553976c4da484d407e85e41c83cb812aa014f0eddc50"},
 ]
+fpyutils = [
+    {file = "fpyutils-1.1.0-py3-none-any.whl", hash = "sha256:4e22041ba2a50c9378a4f43975a4b9fcf8538b98998ac323ba779ee67aa2d50a"},
+    {file = "fpyutils-1.1.0.tar.gz", hash = "sha256:ecf9314733324a82d13ab9941c3fc2f4897d27066e1ba00bfca27d66f43cc5b7"},
+]
 importlib-metadata = [
     {file = "importlib_metadata-1.5.0-py2.py3-none-any.whl", hash = "sha256:b97607a1a18a5100839aec1dc26a1ea17ee0d93b20b0f008d80a5a050afb200b"},
     {file = "importlib_metadata-1.5.0.tar.gz", hash = "sha256:06f5b3a99029c7134207dd882428a66992a9de2bef7c2b699b5641f9886c3302"},
+]
+md-toc = [
+    {file = "md_toc-6.0.2-py3-none-any.whl", hash = "sha256:1b7e591941525cdb316cf8b5d7866203fb80e7356af492075c33e3c0e90c6e06"},
+    {file = "md_toc-6.0.2.tar.gz", hash = "sha256:d8145bf367d5734a8acb4de8c64251bd02a5d7aa1a3171f38fe55d140cb482a4"},
 ]
 more-itertools = [
     {file = "more-itertools-8.2.0.tar.gz", hash = "sha256:b1ddb932186d8a6ac451e1d95844b382f55e12686d51ca0c68b6f61f2ab7a507"},

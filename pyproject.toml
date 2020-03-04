@@ -31,3 +31,4 @@ xlsxwriter = ['xlsxwriter']
 pytest = "^5"
 pytest-cov = "^2.8.1"
 pytest-pep8 = "^1.0.6"
+md_toc = "^6.0.2"
