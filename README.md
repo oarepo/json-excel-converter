@@ -9,6 +9,8 @@ A package that converts json to CSV, excel or other table formats
 
 ## Sample output
 
+![](./docs/sample.png)
+
 ### Simple json
 
 ```json
@@ -223,6 +225,8 @@ w = Writer('/tmp/test3.xlsx', column_widths={
     'a.c': 30,
 })
 ```
+
+![](./docs/test3.png)
 
 To set the default column width, pass it as ``DEFAULT_COLUMN_WIDTH`` property:
 
