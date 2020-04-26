@@ -179,15 +179,21 @@ class Columns:
                 if k in value
             ]
         elif self.options.excludes:
+            key_func = self.options.sort_key
+            for k in value.keys():
+                key_func(k)
             pairs = [
                 (k, value[k])
-                for k in sorted(value.keys(), key=self.options.sort_key)
+                for k in sorted(value.keys(), key=key_func)
                 if k not in self.options.excludes
             ]
         else:
+            key_func = self.options.sort_key
+            for k in value.keys():
+                key_func(k)
             pairs = [
                 (k, value[k])
-                for k in sorted(value.keys(), key=self.options.sort_key)
+                for k in sorted(value.keys(), key=key_func)
             ]
         for k, v in pairs:
             if k in self.columns:

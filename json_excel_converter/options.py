@@ -50,7 +50,7 @@ class Options:
     def sort_key(self):
         if self._sort_key:
             return self._sort_key
-        return lambda x: (self.ordering.get(x, len(self.ordering)), x)
+        return lambda x: (self.ordering.setdefault(x, len(self.ordering)), x)
 
     @sort_key.setter
     def sort_key(self, func):
